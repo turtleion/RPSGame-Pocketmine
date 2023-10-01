@@ -1,0 +1,32 @@
+name: RPSGame
+version: 1.0.0
+api: 5.0.0
+main: TLion\RPSGame\Main
+
+commands:
+  rps:
+    description: A simple game
+    usage: /rps
+    permission: use.rps
+  rpsg:
+    description: A Simple GUI Rock Paper Scissor Game
+    usage: /rpsg
+    permission: use.rpsg
+  rpsaccept:
+    description: Command to accept a request
+    usage: /rpsaccept
+    permission: use.rpsaccept
+  rpsinfo:
+    description: Display this plugin info
+    usage: /rpsinfo
+    permission: use.rpsinfo
+    
+permissions:
+  use.rps:
+    default: true
+  use.rpsg:
+    default: true
+  use.rpsaccept:
+    default: true
+  use.rpsinfo:
+    default: true
