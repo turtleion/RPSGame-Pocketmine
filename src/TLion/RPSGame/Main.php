@@ -7,15 +7,17 @@ use pocketmine\event\Listener;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat as C;
+use jojoe77777\FormAPI\SimpleForm;
+
 class Main extends PluginBase implements Listener {
 	private array $rps_queue = [];
+	private array $playerList = [];
 	private array $busy = [];
 	public function onEnable():
 	void {
 		// @mkdir($this->getDefaultFolder());
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 		//$this->saveResource();
-		$this->getLogger()->info(C::GREEN . "[RPSGame]" . C::WHITE . " Plugin enabled..");
 	}
 
 	private function inform(string $info, string $text): string {
@@ -185,7 +187,39 @@ class Main extends PluginBase implements Listener {
 			case "rpsinfo":
 				$sender->sendMessage("[ " . C::GREEN . "INFO" . C::WHITE . " ] RPSGame v1.1.0.2");
 				break;
+
+			case "rpsg":
+				if ($sender instanceof Player){
+					$this->MainForm($sender);
+				}
 		}
 		return true;
+	}
+
+	public function PlayGameGUI (Player $pl): SimpleForm {
+		$form = new 
+	}
+
+	public function MainForm(Player $player): SimpleForm
+	{
+		$form = new SimpleForm(function (Player $player, int $data = null) {
+			if ($data === null){
+				return true;
+			}
+
+			switch ($data){
+				case 0:
+					$this->PlayGameGUI($player);
+				case 1:
+					break;
+			}
+		});
+		$form->setTitle("RPS GUI v1");
+		$form->setContent("Select player to play with.");
+
+		$form->addButton("Play Game");
+		$form->addButton("Exit");
+		$form->sendToPlayer($player);
+		return $form;
 	}
 }
