@@ -197,7 +197,29 @@ class Main extends PluginBase implements Listener {
 	}
 
 	public function PlayGameGUI (Player $pl): SimpleForm {
-		$form = new 
+		$form = new SimpleForm (function (Player $player, int $data = null){
+			if ($data === null){
+				return true;
+			}
+
+			if (isset($playerlist[$data])){
+				$ply = $playerlist[$data];
+				$ply->sendMessage("READY");
+			}
+
+			return true;
+		});
+		$form->setTitle("RPS GUI v1 | Play");
+		$form->setContent("Please select a player to play with.");
+		foreach($this->getServer()->getOnlinePlayers() as $player){
+			if ($player->getName() == $pl->getName()){
+				continue;
+			}
+			$this->playerList[$pl->getName()][] = $player->getName();
+			$form->addButton($player->getName());
+		}
+		$form->sendToPlayer($pl);
+		return $form;
 	}
 
 	public function MainForm(Player $player): SimpleForm
@@ -213,6 +235,7 @@ class Main extends PluginBase implements Listener {
 				case 1:
 					break;
 			}
+			return true;
 		});
 		$form->setTitle("RPS GUI v1");
 		$form->setContent("Select player to play with.");
